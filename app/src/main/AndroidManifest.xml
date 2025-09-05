@@ -28,10 +28,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Add CameraActivity -->
-        <activity
-            android:name=".CameraActivity"
-            android:exported="false" />
 
         <!-- Add FileProvider for camera photos -->
         <provider
