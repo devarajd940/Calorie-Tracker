@@ -32,6 +32,16 @@
             android:clipToPadding="false"
             android:paddingBottom="16dp" />
 
+        <!-- Floating Action Button below RecyclerView on the left -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAddCustomEntry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
+            android:contentDescription="Add custom meal"
+            android:layout_marginBottom="12dp"
+            android:layout_gravity="start" />
+
         <TextView
             android:id="@+id/tvTodaysCalories"
             android:layout_width="wrap_content"
@@ -49,7 +59,6 @@
 
     </LinearLayout>
 
-    <!-- Loading ProgressBar overlay -->
     <ProgressBar
         android:id="@+id/progressBarLoading"
         style="?android:attr/progressBarStyleLarge"

@@ -90,6 +90,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        binding.fabAddCustomEntry.setOnClickListener {
+            showAddCustomEntryDialog()
+        }
+
         adapter.onDeleteClick = { foodLog ->
             MaterialAlertDialogBuilder(this)
                 .setTitle("Delete Entry")
@@ -154,6 +158,49 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun showAddCustomEntryDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_add_custom_entry, null)
+        val etMealName = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etMealName)
+        val etCalories = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etCalories)
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Add Custom Meal")
+            .setView(dialogView)
+            .setPositiveButton("Add") { _, _ ->
+                val name = etMealName.text.toString().trim()
+                val caloriesStr = etCalories.text.toString().trim()
+                val calories = caloriesStr.toIntOrNull()
+
+                if (name.isEmpty() || calories == null || calories <= 0) {
+                    Toast.makeText(this, "Please enter valid meal name and positive calories", Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+
+                saveCustomMeal(name, calories)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun saveCustomMeal(name: String, calories: Int) {
+        val dateTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
+
+        val foodLog = FoodLog(
+            foodName = name,
+            calories = calories,
+            imagePath = "",
+            dateTime = dateTime,
+            analysisDetails = ""
+        )
+
+        lifecycleScope.launch {
+            database.foodLogDao().insertFoodLog(foodLog)
+            val databaseDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            loadFoodLogsForDate(databaseDateFormat.format(currentSelectedDate.time))
+            Toast.makeText(this@MainActivity, "Custom meal added", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun updateDateField() {
         val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
         binding.tfSelectedDate.setText(dateFormat.format(currentSelectedDate.time))
@@ -167,5 +214,11 @@ class MainActivity : AppCompatActivity() {
                 binding.tvTodaysCalories.text = "$totalCalories cal"
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val databaseDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        loadFoodLogsForDate(databaseDateFormat.format(currentSelectedDate.time))
     }
 }
