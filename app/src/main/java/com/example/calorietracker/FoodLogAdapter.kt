@@ -31,6 +31,7 @@ class FoodLogAdapter : RecyclerView.Adapter<FoodLogAdapter.FoodLogViewHolder>() 
     override fun getItemCount() = foodLogs.size
 
     inner class FoodLogViewHolder(private val binding: ItemFoodLogBinding) : RecyclerView.ViewHolder(binding.root) {
+
         init {
             binding.btnDelete.setOnClickListener {
                 val position = adapterPosition
@@ -43,6 +44,8 @@ class FoodLogAdapter : RecyclerView.Adapter<FoodLogAdapter.FoodLogViewHolder>() 
         fun bind(foodLog: FoodLog) {
             binding.tvFoodName.text = foodLog.foodName
             binding.tvCalories.text = "${foodLog.calories} calories"
+            binding.tvProtein.text = "${foodLog.protein} g protein"  // Show protein
+
             try {
                 val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
                 val outputFormat = SimpleDateFormat("MMM dd, HH:mm", Locale.getDefault())
@@ -51,6 +54,7 @@ class FoodLogAdapter : RecyclerView.Adapter<FoodLogAdapter.FoodLogViewHolder>() 
             } catch (e: Exception) {
                 binding.tvDateTime.text = foodLog.dateTime
             }
+
             try {
                 val imageFile = File(foodLog.imagePath)
                 if (imageFile.exists()) {

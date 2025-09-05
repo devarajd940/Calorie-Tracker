@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FoodLogDao {
+
     @Query("SELECT * FROM food_logs ORDER BY dateTime DESC")
     fun getAllFoodLogs(): Flow<List<FoodLog>>
 
@@ -22,4 +23,7 @@ interface FoodLogDao {
 
     @Query("SELECT SUM(calories) FROM food_logs WHERE DATE(dateTime) = :date")
     suspend fun getCaloriesByDate(date: String): Int?
+
+    @Query("SELECT SUM(protein) FROM food_logs WHERE DATE(dateTime) = :date")  // New function for protein sum
+    suspend fun getProteinByDate(date: String): Int?
 }

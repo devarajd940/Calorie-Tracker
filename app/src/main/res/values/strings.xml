@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Calorie Tracker</string>
-    <string name="add_food">Add Food</string>
+    <string name="select_date">Select Date</string>
+    <string name="add_food_photo">Add Food (Photo)</string>
+    <string name="add_custom_meal">Add Custom Meal</string>
+    <string name="protein_grams">Protein (g)</string>
+    <string name="calories">Calories</string>
+    <string name="meal_name">Meal Name</string>
+    <string name="food_image">Food Image</string>
+    <string name="delete_entry">Delete Entry</string>
 </resources>
