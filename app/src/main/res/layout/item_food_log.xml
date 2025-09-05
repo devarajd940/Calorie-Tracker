@@ -7,22 +7,22 @@
     android:elevation="4dp">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:padding="8dp">
 
         <ImageView
             android:id="@+id/ivFoodImage"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:contentDescription="@string/food_image" />
+            android:contentDescription="@string/food_image"/>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:orientation="vertical"
             android:layout_marginStart="8dp">
 
             <TextView
@@ -30,37 +30,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/tvCalories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"/>
 
             <TextView
                 android:id="@+id/tvProtein"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:layout_marginTop="2dp"/>
 
             <TextView
                 android:id="@+id/tvDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:textSize="12sp"
                 android:textColor="#888888"
-                android:textSize="12sp" />
+                android:layout_marginTop="4dp"/>
         </LinearLayout>
 
         <ImageButton
             android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/delete"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/delete_entry"
-            android:src="@android:drawable/ic_delete" />
+            android:src="@android:drawable/ic_delete"/>
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>

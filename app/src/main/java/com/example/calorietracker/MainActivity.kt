@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -33,9 +34,7 @@ class MainActivity : AppCompatActivity() {
     private var currentSelectedDate: Calendar = Calendar.getInstance()
     private val geminiAnalyzer = GeminiAnalyzer()
 
-    private val cameraLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
+    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             val bitmap = result.data?.extras?.get("data") as? Bitmap
             if (bitmap != null) {
@@ -48,9 +47,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val cameraPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { granted ->
+    private val cameraPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         if (granted) {
             launchCameraIntent()
         } else {
@@ -77,7 +74,6 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerViewFoodLogs.layoutManager = LinearLayoutManager(this)
 
         val databaseDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
         updateDateField()
         loadFoodLogsForDate(databaseDateFormat.format(currentSelectedDate.time))
 
@@ -85,7 +81,6 @@ class MainActivity : AppCompatActivity() {
             val year = currentSelectedDate.get(Calendar.YEAR)
             val month = currentSelectedDate.get(Calendar.MONTH)
             val day = currentSelectedDate.get(Calendar.DAY_OF_MONTH)
-
             val dialog = DatePickerDialog(
                 this,
                 { _, y, m, d ->
@@ -101,18 +96,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnAddFood.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.CAMERA
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                 launchCameraIntent()
             } else {
                 cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
             }
         }
 
-        binding.fabAddCustomEntry.setOnClickListener {
+        binding.fabAddCustom.setOnClickListener {
             showAddCustomEntryDialog()
         }
 
@@ -151,8 +142,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun launchCameraIntent() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        cameraLauncher.launch(intent)
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        cameraLauncher.launch(cameraIntent)
     }
 
     private fun saveBitmapAndAnalyze(bitmap: Bitmap) {
@@ -213,9 +204,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun showAddCustomEntryDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_custom_entry, null)
-        val etMealName = dialogView.findViewById<android.widget.EditText>(R.id.etMealName)
-        val etCalories = dialogView.findViewById<android.widget.EditText>(R.id.etCalories)
-        val etProtein = dialogView.findViewById<android.widget.EditText>(R.id.etProtein)
+        val etMealName = dialogView.findViewById<EditText>(R.id.etMealName)
+        val etCalories = dialogView.findViewById<EditText>(R.id.etCalories)
+        val etProtein = dialogView.findViewById<EditText>(R.id.etProtein)
 
         MaterialAlertDialogBuilder(this)
             .setTitle("Add Custom Meal")
@@ -268,8 +259,8 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             database.foodLogDao().getFoodLogsByDate(date).collect { logs ->
                 adapter.updateFoodLogs(logs)
-                val totalCalories = logs.sumOf { log -> log.calories }
-                val totalProtein = logs.sumOf { log -> log.protein }
+                val totalCalories = logs.sumOf { it.calories }
+                val totalProtein = logs.sumOf { it.protein }
                 binding.tvTodaysCalories.text = "$totalCalories cal"
                 binding.tvTodaysProtein.text = "$totalProtein g protein"
             }

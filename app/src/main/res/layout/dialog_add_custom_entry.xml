@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/meal_name"
-        android:inputType="textPersonName" />
+        android:inputType="text"/>
 
     <EditText
         android:id="@+id/etCalories"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/calories"
         android:inputType="number"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"/>
 
     <EditText
         android:id="@+id/etProtein"
@@ -27,5 +27,6 @@
         android:layout_height="wrap_content"
         android:hint="@string/protein_grams"
         android:inputType="number"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"/>
+
 </LinearLayout>
