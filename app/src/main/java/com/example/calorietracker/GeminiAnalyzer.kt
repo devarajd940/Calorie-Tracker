@@ -15,7 +15,7 @@ data class FoodAnalysisResult(
 
 class GeminiAnalyzer {
 
-    private val apiKey = "enter your Gemini key here"
+    private val apiKey = "Enter your API key here"
 
     private val generativeModel = GenerativeModel(
         modelName = "gemini-2.5-flash",

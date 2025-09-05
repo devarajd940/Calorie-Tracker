@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         updateDateField()
         loadFoodLogsForDate(databaseDateFormat.format(currentSelectedDate.time))
 
-        binding.tfSelectedDate.setOnClickListener {
+        binding.tfSelected.setOnClickListener {
             val year = currentSelectedDate.get(Calendar.YEAR)
             val month = currentSelectedDate.get(Calendar.MONTH)
             val day = currentSelectedDate.get(Calendar.DAY_OF_MONTH)
@@ -252,7 +252,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateDateField() {
         val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
-        binding.tfSelectedDate.setText(dateFormat.format(currentSelectedDate.time))
+        binding.tfSelected.setText(dateFormat.format(currentSelectedDate.time))
     }
 
     private fun loadFoodLogsForDate(date: String) {
