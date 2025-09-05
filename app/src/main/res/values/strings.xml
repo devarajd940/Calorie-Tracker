@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Calorie Tracker</string>
+    <string name="add_food">Add Food</string>
+</resources>
